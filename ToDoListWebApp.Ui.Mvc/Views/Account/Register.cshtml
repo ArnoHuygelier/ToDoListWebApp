@@ -1,6 +1,7 @@
 ﻿@model ToDoListWebApp.Ui.Mvc.Models.RegisterViewModel
 
 <form asp-action="Register" method="post">
+    <span asp-validation-Summary="All" class="text-danger"></span>
     <div class="form-group">
         <label asp-for="FirstName"></label>
         <input asp-for="FirstName" class="form-control" />
@@ -33,3 +34,9 @@
 
     <button type="submit" class="btn btn-primary">Register</button>
 </form>
+
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

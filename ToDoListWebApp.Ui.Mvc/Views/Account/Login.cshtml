@@ -1,6 +1,7 @@
 ﻿@model ToDoListWebApp.Ui.Mvc.Models.LoginViewModel
 
 <form asp-action="Login" method="post">
+    <span asp-validation-summary="All" class="text-danger"></span>
     <div class="form-group">
         <label asp-for="Email"></label>
         <input asp-for="Email" class="form-control" />
@@ -22,3 +23,8 @@
 
     <button type="submit" class="btn btn-primary">Login</button>
 </form>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

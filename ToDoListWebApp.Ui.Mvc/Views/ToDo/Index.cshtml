@@ -1,0 +1,42 @@
+﻿@model List<ToDoListWebApp.Models.ToDoItem>
+@{
+    ViewData["Title"] = "To-Do Overview";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <a href="@Url.Action("Create", "ToDo")" class="btn btn-primary">Maak een nieuwe taak aan</a>
+</div>
+
+<h2>Jouw Taken</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Taak</th>
+            <th>Beschrijving</th>
+            <th>Status</th>
+            <th>Acties</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if(Model != null)
+        {
+            @foreach (var task in Model)
+            {
+                <tr>
+                    <td>@task.Title</td>
+                    <td>@task.Description</td>
+                    <td>@(task.IsCompleted ? "Voltooid" : "Niet voltooid")</td>
+                    <td>
+                        @if (!task.IsCompleted)
+                        {
+                            <a href="@Url.Action("Complete", "ToDo", new { id = task.Id })" class="btn btn-success">Markeer als voltooid</a>
+                        }
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

@@ -16,8 +16,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {
-
-}).AddEntityFrameworkStores<ApplicationDbContext>();
+    
+})
+.AddEntityFrameworkStores<ApplicationDbContext>()
+.AddDefaultTokenProviders();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
@@ -29,6 +31,31 @@ builder.Services.ConfigureApplicationCookie(options =>
 });
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+
+    // Controleer of de rollen al bestaan, zo niet, maak ze dan aan
+    string[] roleNames = { "Admin", "User", "Manager" };
+
+    foreach (var roleName in roleNames)
+    {
+        var roleExist = await roleManager.RoleExistsAsync(roleName);
+        if (!roleExist)
+        {
+            await roleManager.CreateAsync(new IdentityRole(roleName));
+        }
+    }
+
+    // Zorg ervoor dat de gebruiker een rol krijgt bij het opstarten (indien gewenst)
+    var defaultUser = await userManager.FindByEmailAsync("arno2003.huygelier@gmail.com");
+    if (defaultUser != null && !await userManager.IsInRoleAsync(defaultUser, "Admin"))
+    {
+        await userManager.AddToRoleAsync(defaultUser, "Admin");
+    }
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
