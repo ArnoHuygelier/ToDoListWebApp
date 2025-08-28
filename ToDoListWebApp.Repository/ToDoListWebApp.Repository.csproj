@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ToDoListWebApp.Models\ToDoListWebApp.Models.csproj" />
+  </ItemGroup>
+
 </Project>
