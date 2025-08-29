@@ -17,6 +17,6 @@ namespace ToDoListWebApp.Models
 
 
         public string? UserId { get; set; } 
-        public required ApplicationUser User { get; set; } 
+        public ApplicationUser User { get; set; } 
     }
 }

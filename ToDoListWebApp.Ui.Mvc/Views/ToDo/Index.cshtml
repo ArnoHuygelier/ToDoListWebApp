@@ -32,7 +32,11 @@
                     <td>
                         @if (!task.IsCompleted)
                         {
-                            <a href="@Url.Action("Complete", "ToDo", new { id = task.Id })" class="btn btn-success">Markeer als voltooid</a>
+                            <a asp-controller="ToDo" asp-action="Complete" asp-route-id="@task.Id" class="btn btn-success">Markeer als voltooid</a>
+                        }
+                        else
+                        {
+                            <a asp-controller="ToDo" asp-action="Delete" asp-route-id="@task.Id" class="btn btn-danger">Verwijder</a>
                         }
                     </td>
                 </tr>

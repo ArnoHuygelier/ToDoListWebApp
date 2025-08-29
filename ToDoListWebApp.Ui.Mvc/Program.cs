@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using ToDoListWebApp.Models;
 using ToDoListWebApp.Repository;
+using ToDoListWebApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,11 +25,13 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.Cookie.HttpOnly = true;
-    options.LoginPath = "/Account/SignIn";
-    options.AccessDeniedPath = "/Account/SignIn";
+    options.LoginPath = "/Account/Login";
+    options.AccessDeniedPath = "/Account/Login";
     options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
     options.SlidingExpiration = true;
 });
+
+builder.Services.AddScoped<ToDoServices>();
 
 var app = builder.Build();
 
